@@ -11,6 +11,11 @@ on:
       - reopened
   merge_group:
 
+# Cancel superseded PR revisions while preserving independent event types.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   pr:
     name: Check PR Title
