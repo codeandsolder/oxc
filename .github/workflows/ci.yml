@@ -6,6 +6,16 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, synchronize]
+    # Config/docs-only PRs are checked by dedicated workflows, not the
+    # full multi-platform compiler/test/NAPI/benchmark matrix.
+    # Keep every source, fixture, and CI implementation change in full CI.
+    paths-ignore:
+      - '.github/workflows/shared-workflow-policy.yml'
+      - '.github/workflows/rust-skills2-strict.yml'
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'MAINTENANCE.md'
   merge_group:
   push:
     branches:
