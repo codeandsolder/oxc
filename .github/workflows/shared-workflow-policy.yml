@@ -16,4 +16,17 @@ permissions:
 
 jobs:
   validate:
-    uses: codeandsolder/ci-workflows/.github/workflows/workflow-concurrency.yml@108f9de3893da7e4f6c59b4d8e3842e37096b0be # main
+    name: Check PR workflow cancellation
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out caller repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      # The external reusable workflow is not resolvable from the OXC fork,
+      # even though the same SHA works in non-fork callers. Invoke its pinned
+      # shared composite action directly; no policy logic is duplicated.
+      - name: Check all caller workflows
+        uses: codeandsolder/ci-workflows/.github/actions/workflow-concurrency-policy@108f9de3893da7e4f6c59b4d8e3842e37096b0be # main
