@@ -1,0 +1,29 @@
+name: Fork CI cache
+description: GitHub Actions replacement for Namespace Rust and fixture caches
+
+inputs:
+  cache:
+    description: Original cache kinds (rust and/or pnpm)
+    required: false
+    default: ""
+  path:
+    description: Additional fixture directory to cache
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    # OXC's setup-node action caches pnpm; rust-cache handles Cargo artifacts.
+    # Do not cache the complete ~/.rustup toolchains.
+    - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+      if: contains(inputs.cache, 'rust')
+      with:
+        save-if: ${{ github.ref == 'refs/heads/main' }}
+    - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      if: inputs.path != ''
+      with:
+        path: ${{ inputs.path }}
+        key: ${{ runner.os }}-oxc-fixtures-${{ github.job }}-${{ hashFiles('Cargo.lock', 'pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-oxc-fixtures-${{ github.job }}-
