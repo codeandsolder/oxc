@@ -12,6 +12,7 @@ on:
     paths-ignore:
       - ".github/workflows/shared-workflow-policy.yml"
       - ".github/workflows/rust-skills2-strict.yml"
+      - ".github/workflows/miri.yml"
       - ".github/ISSUE_TEMPLATE/**"
       - "README.md"
       - "CONTRIBUTING.md"
@@ -20,6 +21,17 @@ on:
   push:
     branches:
       - main
+    # Main-branch policy, Miri and documentation updates have their own
+    # verification workflows; avoid rerunning the 25-job application matrix.
+    # Source changes and changes to this CI workflow still run everything.
+    paths-ignore:
+      - ".github/workflows/shared-workflow-policy.yml"
+      - ".github/workflows/rust-skills2-strict.yml"
+      - ".github/workflows/miri.yml"
+      - ".github/ISSUE_TEMPLATE/**"
+      - "README.md"
+      - "CONTRIBUTING.md"
+      - "MAINTENANCE.md"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.event.pull_request.number || github.sha }}
