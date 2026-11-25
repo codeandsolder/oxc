@@ -18,4 +18,5 @@ jobs:
     uses: codeandsolder/ci-workflows/.github/workflows/rust-sccache.yml@ff6fd7c37922135c22ee83c77d3e8e91fc9ebac1 # main
     with:
       timeout-minutes: 45
+      test-impact-mode: none
       command: bash .github/scripts/validate-upstream.sh
