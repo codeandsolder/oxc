@@ -17,5 +17,6 @@ jobs:
       upstream-branch: main
       target-branch: main
       strategy: merge
+      workflow-policy: preserve
       rust-toolchain: repository
       validation-script: .github/scripts/validate-upstream.sh
