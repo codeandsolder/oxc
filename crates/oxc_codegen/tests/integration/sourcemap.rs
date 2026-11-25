@@ -467,18 +467,10 @@ longFunctionName(0);
     let (mangled_output, mangled_sourcemap_url, mangled_names) = codegen_mangled(mangled_case);
     assert_eq!(mangled_names, ["longFunctionName", "longName"]);
 
-    let node_version = std::process::Command::new("node").arg("--version").output().map_or_else(
-        |_| "unknown".to_string(),
-        |output| String::from_utf8_lossy(&output.stdout).trim().to_string(),
-    );
-
     insta::with_settings!({ prepend_module_to_snapshot => false, snapshot_suffix => "", omit_expression => true }, {
         insta::assert_snapshot!(
             "stacktrace_is_correct",
-            format!(
-                "Node.js version: {}\n\n{}",
-                node_version,
-                cases.iter().map(|s| {
+            cases.iter().map(|s| {
                     let (output, sourcemap_url) = codegen(s);
                     format!("## Input\n{}\n\n## Output\n{}\n\n## Stderr\n{}", s, output, execute_with_node(&output, &sourcemap_url))
                 }).chain(std::iter::once(format!(
@@ -488,7 +480,6 @@ longFunctionName(0);
                     mangled_output,
                     execute_with_node(&mangled_output, &mangled_sourcemap_url),
                 ))).collect::<Vec<_>>().join("\n------------------------------------------------------\n")
-            )
         );
     });
 }
