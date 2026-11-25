@@ -1,0 +1,22 @@
+name: Track upstream
+
+on:
+  schedule:
+    - cron: "43 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sync:
+    uses: codeandsolder/ci-workflows/.github/workflows/upstream-tracking.yml@ff6fd7c37922135c22ee83c77d3e8e91fc9ebac1 # main
+    with:
+      upstream-repository: oxc-project/oxc
+      upstream-branch: main
+      target-branch: main
+      strategy: merge
+      workflow-policy: preserve
+      rust-toolchain: repository
+      validation-script: .github/scripts/validate-upstream.sh
