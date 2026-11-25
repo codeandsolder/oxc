@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   sync:
-    uses: codeandsolder/ci-workflows/.github/workflows/upstream-tracking.yml@ff6fd7c37922135c22ee83c77d3e8e91fc9ebac1 # main
+    uses: codeandsolder/ci-workflows/.github/workflows/upstream-tracking.yml@7df510a2053e220c010c331b5daef81a593a19bb # main
     with:
       upstream-repository: oxc-project/oxc
       upstream-branch: main
