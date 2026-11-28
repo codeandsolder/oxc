@@ -1,6 +1,6 @@
 {
   "source": "oxc-project/oxc:main",
-  "lastAttempt": 1795873187444,
+  "lastAttempt": 1795873190352,
   "observations": [
     {
       "sha": "2947286547bb43b0c0aaab38d6f05b0a0589d2b5",
@@ -13,6 +13,10 @@
     {
       "sha": "c3c7e6fe4a778f672316259a2b1b65d20a80bd79",
       "firstObserved": 1795789505555
+    },
+    {
+      "sha": "bac203189f79d1d593e4eebaca18cdaa40a58add",
+      "firstObserved": 1795873190352
     }
   ]
 }
